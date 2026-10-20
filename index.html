@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Portfolio · Desarrollo Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #EEE8DF;
+      --beige: #C4BCB0;
+      --ocean: #2C365A;
+      --bg: var(--cream);
+      --fg: var(--ocean);
+      --card: var(--ocean);
+      --card-fg: var(--cream);
+      --soft: var(--beige);
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #232b49;
+        --fg: var(--cream);
+        --card: var(--beige);
+        --card-fg: var(--ocean);
+        --soft: #3a4570
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #232b49;
+      --fg: var(--cream);
+      --card: var(--beige);
+      --card-fg: var(--ocean);
+      --soft: #3a4570
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+      height: 100%
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 400 1rem/1.7 Inter, system-ui, sans-serif;
+      min-height: 100%;
+      overflow-x: hidden
+    }
+
+    .serif {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400
+    }
+
+    header {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 5;
+      margin: 16px auto 0;
+      max-width: 1000px;
+      width: calc(100% - 32px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 20px;
+      border: 1px solid var(--fg);
+      border-radius: 18px;
+      background: var(--bg)
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-style: italic;
+      text-decoration: none;
+      color: var(--fg);
+      line-height: 1
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end
+    }
+
+    nav a {
+      color: var(--fg);
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    nav a:hover {
+      text-decoration: underline
+    }
+
+    .lang {
+      border: 1px solid var(--fg);
+      background: none;
+      color: var(--fg);
+      border-radius: 99px;
+      padding: 3px 12px;
+      font: 600 .75rem Inter, sans-serif;
+      cursor: pointer
+    }
+
+    .lang:hover {
+      background: var(--fg);
+      color: var(--bg)
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 90px 16px 20px
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-weight: 400;
+      line-height: 1
+    }
+
+    h1 {
+      font-size: clamp(3.4rem, 11vw, 7.5rem);
+      letter-spacing: -.02em
+    }
+
+    h1 em,
+    h2 em {
+      font-style: italic
+    }
+
+    h2 {
+      font-size: clamp(2.6rem, 7vw, 4.5rem);
+      margin-bottom: 28px
+    }
+
+    .eyebrow {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 18px
+    }
+
+    #home {
+      padding-top: 110px;
+      min-height: 70vh;
+      position: relative
+    }
+
+    #home>*:not(.hero-bg) {
+      position: relative;
+      z-index: 1
+    }
+
+    .hero-bg {
+      position: absolute;
+      right: 0;
+      top: 80px;
+      width: min(600px, 92%);
+      color: var(--fg);
+      opacity: .09;
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .hero-bg svg {
+      display: block;
+      width: 100%;
+      height: auto
+    }
+
+    #home p.lead {
+      max-width: 560px;
+      font-size: 1.15rem;
+      margin: 28px 0
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 26px;
+      border-radius: 99px;
+      background: var(--fg);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .9rem;
+      border: 1px solid var(--fg)
+    }
+
+    .btn.ghost {
+      background: none;
+      color: var(--fg);
+      margin-left: 8px
+    }
+
+    .btn:hover {
+      opacity: .85
+    }
+
+    .panel {
+      background: var(--soft);
+      border-radius: 26px;
+      padding: clamp(24px, 5vw, 48px);
+      color: var(--fg)
+    }
+
+    #about .panel {
+      display: grid;
+      gap: 24px
+    }
+
+    #about .panel p {
+      margin: 0;
+      max-width: 680px
+    }
+
+    #about h3 {
+      font-size: 2rem;
+      font-style: italic
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none
+    }
+
+    .pills li {
+      padding: 8px 18px;
+      border: 1px solid var(--fg);
+      border-radius: 99px;
+      font-size: .88rem;
+      font-weight: 500
+    }
+
+    .sub {
+      margin: 28px 0 12px;
+      font-size: 1.6rem;
+      font-style: italic
+    }
+
+    .cols {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px
+    }
+
+    .cols .panel .sub {
+      margin-top: 0;
+      margin-bottom: 22px;
+      font-size: 2rem
+    }
+
+    .item {
+      position: relative;
+      border-left: 1px solid var(--fg);
+      padding: 0 0 26px 22px;
+      margin-left: 5px
+    }
+
+    .item:last-child {
+      padding-bottom: 0
+    }
+
+    .item::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 8px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--fg)
+    }
+
+    .item h4 {
+      margin: 0;
+      font: 400 1.5rem/1.15 "Instrument Serif", Georgia, serif;
+      font-style: italic
+    }
+
+    .item small {
+      display: block;
+      margin: 4px 0 8px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase
+    }
+
+    .item p {
+      margin: 0;
+      font-size: .93rem
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 16px
+    }
+
+    .work {
+      background: var(--card);
+      color: var(--card-fg);
+      border-radius: 26px;
+      padding: 28px;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
+
+    .work h3 {
+      font-size: 2.3rem;
+      font-style: italic
+    }
+
+    .work p {
+      margin: 12px 0 0;
+      font-size: .93rem;
+      opacity: .9
+    }
+
+    .wlink {
+      display: inline-block;
+      margin-top: 16px;
+      color: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor
+    }
+
+    .wlink:hover {
+      opacity: .75
+    }
+
+    .work .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase
+    }
+
+    .work .tags span {
+      border: 1px solid currentColor;
+      border-radius: 99px;
+      padding: 3px 10px
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 24px
+    }
+
+    .link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-radius: 20px;
+      background: var(--card);
+      color: var(--card-fg);
+      text-decoration: none;
+      font-weight: 600
+    }
+
+    .link:hover {
+      transform: translateY(-2px)
+    }
+
+    .link span:last-child {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      font-weight: 400
+    }
+
+    footer {
+      max-width: 1000px;
+      margin: 70px auto 0;
+      padding: 24px 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-top: 1px solid var(--soft)
+    }
+
+    @media(max-width:640px) {
+      header {
+        border-radius: 16px;
+        padding: 8px 14px
+      }
+
+      nav {
+        gap: 10px
+      }
+
+      nav a {
+        font-size: .68rem
+      }
+
+      .logo {
+        display: none
+      }
+
+      .hero-bg {
+        top: 130px;
+        opacity: .07
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo serif" href="#home">Portfolio</a>
+    <nav>
+      <a href="#home" data-i18n="n_home">Inicio</a>
+      <a href="#about" data-i18n="n_about">Sobre mí</a>
+      <a href="#experience" data-i18n="n_exp">Experiencia</a>
+      <a href="#skills" data-i18n="n_skills">Skills y tools</a>
+      <a href="#works" data-i18n="n_works">Proyectos</a>
+      <a href="#contact" data-i18n="n_contact">Contacto</a>
+      <button class="lang" id="lang" aria-label="Language">EN</button>
+    </nav>
+  </header>
+
+  <section id="home">
+    <div class="hero-bg" aria-hidden="true">
+      <svg viewBox="0 0 520 420" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+        stroke-linejoin="round">
+        <rect x="20" y="30" width="480" height="360" rx="28" />
+        <path d="M20 100H500" />
+        <circle cx="58" cy="65" r="9" fill="currentColor" stroke="none" />
+        <circle cx="88" cy="65" r="9" fill="currentColor" stroke="none" />
+        <circle cx="118" cy="65" r="9" fill="currentColor" stroke="none" />
+        <path d="M60 150H230M100 195H240M100 240H200M60 285H190M100 330H260" />
+        <path d="M345 160L300 215L345 270M430 160L475 215L430 270M405 150L370 280" />
+      </svg>
+    </div>
+    <div class="eyebrow" data-i18n="h_eyebrow">Portafolio · Desarrollo web</div>
+    <h1><span data-i18n="h_hi">Hola, soy</span><br><em>Alicia </em></h1>
+    <p class="lead" data-i18n="h_lead">Desarrolladora full-stack</p>
+    <a class="btn" href="#works" data-i18n="h_cta1">Ver proyectos</a><a class="btn ghost" href="#contact"
+      data-i18n="h_cta2">Contactar</a>
+  </section>
+
+  <section id="about">
+    <h2><em data-i18n="a_title">Sobre mí</em></h2>
+    <div class="panel">
+      <h3 data-i18n="a_sub">Curiosidad, detalle y código limpio.</h3>
+      <p data-i18n="a_p1"></p>
+      <p data-i18n="a_p2"></p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2><em data-i18n="e_title">Experiencia y educación</em></h2>
+    <div class="cols">
+      <div class="panel">
+        <h3 class="sub" data-i18n="e_exp">Experiencia</h3>
+        <div class="item">
+          <h4 data-i18n="x1_t"></h4><small data-i18n="x1_m"></small>
+          <p data-i18n="x1_d"></p>
+        </div>
+        <div class="item">
+          <h4 data-i18n="x2_t"></h4><small data-i18n="x2_m"></small>
+          <p data-i18n="x2_d"></p>
+        </div>
+        <div class="item">
+          <h4 data-i18n="x3_t"></h4><small data-i18n="x3_m"></small>
+          <p data-i18n="x3_d"></p>
+        </div>
+      </div>
+      <div class="panel">
+        <h3 class="sub" data-i18n="e_edu">Educación</h3>
+        <div class="item">
+          <h4 data-i18n="d1_t"></h4><small data-i18n="d1_m"></small>
+          <p data-i18n="d1_d"></p>
+        </div>
+        <div class="item">
+          <h4 data-i18n="d2_t"></h4><small data-i18n="d2_m"></small>
+          <p data-i18n="d2_d"></p>
+        </div>
+        <div class="item">
+          <h4 data-i18n="d3_t"></h4><small data-i18n="d3_m"></small>
+          <p data-i18n="d3_d"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2><em data-i18n="s_title">Skills y tools</em></h2>
+    <p data-i18n="s_intro"></p>
+    <h3 class="sub" data-i18n="s_skills">Habilidades</h3>
+    <ul class="pills">
+      <li>HTML5</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>TypeScript</li>
+      <li>React</li>
+      <li>C#</li>
+      <li>Java</li>
+      <li>MySQL</li>
+    </ul>
+    <h3 class="sub" data-i18n="s_tools">Herramientas</h3>
+    <ul class="pills">
+      <li>Git</li>
+      <li>GitHub</li>
+      <li>VS Code</li>
+      <li>Terminal</li>
+      <li>IntelliJ</li>
+      <li>Unity</li>
+      <li>Photoshop</li>
+      <li>Blender</li>
+      <li>3ds Max</li>
+    </ul>
+  </section>
+
+  <section id="works">
+    <h2><em data-i18n="w_title">Proyectos</em></h2>
+    <p data-i18n="w_intro"></p>
+    <div class="grid">
+      <article class="work">
+        <div>
+          <h3 data-i18n="w1_t"></h3>
+          <p data-i18n="w1_d"></p>
+          <a class="wlink" href="https://albertoburgos.itch.io/duck-and-the-capys" target="_blank" rel="noopener"><span
+              data-i18n="w_view">Ver proyecto</span> ↗</a>
+        </div>
+        <div class="tags"><span>Photoshop</span><span>Procreate</span><span>C#</span><span>Unity</span></div>
+      </article>
+      <article class="work">
+        <div>
+          <h3 data-i18n="w2_t"></h3>
+          <p data-i18n="w2_d"></p>
+          <a class="wlink" href="https://lorrao3.itch.io/elfs-morning" target="_blank" rel="noopener"><span
+              data-i18n="w_view">Ver proyecto</span> ↗</a>
+        </div>
+        <div class="tags"><span>C#</span><span>Unity</span><span>Procreate</span></div>
+      </article>
+      <article class="work">
+        <div>
+          <h3 data-i18n="w3_t"></h3>
+          <p data-i18n="w3_d"></p>
+          <a class="wlink" href="https://github.com/AliciaToribio/DWES/tree/nomina2 " target="_blank" rel="noopener"><span
+              data-i18n="w_view">Ver proyecto</span> ↗</a>
+        </div>
+        <div class="tags"><span>Java</span><span>IntelliJ</span><span>GitHub</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2><em data-i18n="c_title">Contacto</em></h2>
+    <p data-i18n="c_intro"></p>
+    <div class="links">
+      <a class="link" href="https://www.linkedin.com/in/alicia-hern%C3%A1ndez-a2407629a/" target="_blank"
+        rel="noopener"><span>LinkedIn</span><span>↗</span></a>
+      <a class="link" href="https://github.com/AliciaToribio" target="_blank"
+        rel="noopener"><span>GitHub</span><span>↗</span></a>
+      <a class="link" href="./CV_Alicia_Hernández_Toribio.pdf" target="_blank" rel="noopener"><span data-i18n="c_cv">Mi CV
+          (PDF)</span><span>↓</span></a>
+    </div>
+  </section>
+
+  <footer><span data-i18n="f_l"></span><span class="serif"
+      style="font-size:1.1rem;font-style:italic;text-transform:none">© 2026 Alicia</span></footer>
+
+  <script>
+    const T = {
+      es: {
+        n_home: "Inicio", n_about: "Sobre mí", n_exp: "Experiencia", n_skills: "Skills y tools", n_works: "Proyectos", n_contact: "Contacto",
+        h_eyebrow: "Portafolio · Desarrollo web", h_hi: "Hola, soy", h_lead: "Desarrolladora full-stack", h_cta1: "Ver proyectos", h_cta2: "Contactar",
+        a_title: "Sobre mí", a_sub: "Curiosidad, detalle y código limpio.",
+        a_p1: "Me apasiona dar vida tanto a la parte técnica como a la visual del mundo digital. Me importan la experiencia de usuario, el código legible, accesible, y los pequeños detalles.",
+        a_p2: "Actualmente estoy cursando el grado superior de Desarrollo de Aplicaciones Web, pero también cuento con una formación amplia en Animación 3D y Videojuegos. Mi gran pasión es la programación que permite al usuario tener una experiencia satisfactoria gracias a un trabajo limpio y cuidado.",
+        e_title: "Experiencia y educación", e_exp: "Experiencia", e_edu: "Educación",
+        x1_t: "Contrato a jornada completa", x1_m: "Quintas · 2026", x1_d: "Desarrolladora Junior Back-end",
+        x2_t: "Prácticas laborales", x2_m: "Quintas · 2026", x2_d: "Desarrolladora en formación",
+        x3_t: "Prácticas laborales", x3_m: "Intereconomía Radio · 2024", x3_d: "Diseño y edición de redes sociales",
+        d1_t: "Grado Superior en Desarrollo de Aplicaciones Web", d1_m: "IES Sotero Hernández · 2025 – Actualidad", d1_d: "Desarrollo full-stack, bases de datos y despliegue de aplicaciones.",
+        d2_t: "Curso de Arte 2D/3D y Programación para videojuegos", d2_m: "Escuela de Organización Industrial · 2025", d2_d: "Diseño y desarrollo de videojuegos en todas sus etapas.",
+        d3_t: "Animación 3D y Videojuegos", d3_m: "Cámara de Comercio de Sevilla · 2022 – 2024", d3_d: "Formación en animación 3D, diseño y desarrollo de videojuegos.",
+        s_title: "Skills y tools", s_intro: "Las tecnologías y herramientas con las que doy forma a los proyectos.", s_skills: "Habilidades", s_tools: "Herramientas",
+        w_title: "Proyectos", w_intro: "Una selección de cosas que he construido.", w_view: "Ver proyecto",
+        w1_t: "Duck and the Capys", w2_t: "Elf’s Mornings", w3_t: "Nóminas",
+        w1_d: "Videojuego de plataformas 2D centrado en una estética y una jugabilidad agradables para todos los públicos.",
+        w2_d: "Juego de lógica realizado para una Game Jam, con premio al mejor arte.",
+        w3_d: "Aplicación de gestión de nóminas para pequeñas empresas.",
+        c_title: "Contacto", c_intro: "¿Hablamos? Encuéntrame aquí o descarga mi currículum.", c_cv: "Mi CV (PDF)"
+      },
+      en: {
+        n_home: "Home", n_about: "About", n_exp: "Experience", n_skills: "Skills & tools", n_works: "Works", n_contact: "Contact",
+        h_eyebrow: "Portfolio · Web development", h_hi: "Hi, I’m", h_lead: "Full-stack developer", h_cta1: "See my work", h_cta2: "Get in touch",
+        a_title: "About", a_sub: "Curiosity, detail and clean code.",
+        a_p1: "I’m passionate about bringing both the technical and the visual sides of the digital world to life. User experience, readable and accessible code, and the small details matter to me.",
+        a_p2: "I’m currently studying a Higher Vocational Degree in Web Application Development, and I also have broad training in 3D Animation and Video Games. My great passion is programming that gives users a satisfying experience through clean, carefully crafted work.",
+        e_title: "Experience & education", e_exp: "Experience", e_edu: "Education",
+        x1_t: "Full-time contract", x1_m: "Quintas · 2026", x1_d: "Junior Back-end Developer",
+        x2_t: "Work placement", x2_m: "Quintas · 2026", x2_d: "Developer in training",
+        x3_t: "Work placement", x3_m: "Intereconomía Radio · 2024", x3_d: "Social media design and editing",
+        d1_t: "Higher Vocational Degree in Web Application Development", d1_m: "IES Sotero Hernández · 2025 – Present", d1_d: "Full-stack development, databases and application deployment.",
+        d2_t: "2D/3D Art and Video Game Programming Course", d2_m: "School of Industrial Organization (EOI) · 2025", d2_d: "Video game design and development across all stages.",
+        d3_t: "3D Animation & Video Games", d3_m: "Seville Chamber of Commerce · 2022 – 2024", d3_d: "Training in 3D animation, game design and game development.",
+        s_title: "Skills & tools", s_intro: "The technologies and tools I use to bring projects to life.", s_skills: "Skills", s_tools: "Tools",
+        w_title: "Works", w_intro: "A selection of things I’ve built.", w_view: "View project",
+        w1_t: "Duck and the Capys", w2_t: "Elf’s Mornings", w3_t: "Payroll",
+        w1_d: "2D platformer video game focused on an aesthetic and gameplay that are enjoyable for all audiences.",
+        w2_d: "Logic game made for a Game Jam, winner of the best art award.",
+        w3_d: "Payroll management app for small businesses.",
+        c_title: "Contact", c_intro: "Let’s talk! Find me here or download my résumé.", c_cv: "My CV (PDF)"
+      }
+    };
+    const btn = document.getElementById('lang');
+    function setLang(l) {
+      document.documentElement.lang = l;
+      document.querySelectorAll('[data-i18n]').forEach(e => { const v = T[l][e.dataset.i18n]; if (v) e.textContent = v });
+      btn.textContent = l === 'es' ? 'EN' : 'ES';
+      document.title = l === 'es' ? 'Portafolio · Desarrollo Web' : 'Portfolio · Web Development';
+      try { localStorage.setItem('lang', l) } catch (e) { }
+    }
+    btn.addEventListener('click', () => setLang(document.documentElement.lang === 'es' ? 'en' : 'es'));
+    let saved = null; try { saved = localStorage.getItem('lang') } catch (e) { }
+    if (!saved) saved = (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en';
+    setLang(saved);
+  </script>
+</body>
+
+</html>
